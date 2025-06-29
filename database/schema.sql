@@ -565,4 +565,100 @@ ALTER TABLE `withdrawals` ADD CONSTRAINT `fk_withdrawals_processed_by` FOREIGN K
 ALTER TABLE `system_settings` ADD CONSTRAINT `fk_settings_updated_by` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 ALTER TABLE `audit_logs` ADD CONSTRAINT `fk_audit_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system_logs`
+--
+
+CREATE TABLE `system_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `log_type` enum('error','warning','info','debug','admin','backup','maintenance') NOT NULL,
+  `message` text NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `log_type` (`log_type`),
+  KEY `created_at` (`created_at`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification_templates`
+--
+
+CREATE TABLE `notification_templates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `type` enum('email','sms','push') NOT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `content` text NOT NULL,
+  `variables` text DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`),
+  KEY `is_active` (`is_active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `broadcast_messages`
+--
+
+CREATE TABLE `broadcast_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `type` enum('email','sms','push','system') NOT NULL,
+  `target_role` enum('all','admin','user','agent') DEFAULT 'all',
+  `priority` enum('low','normal','high','urgent') DEFAULT 'normal',
+  `status` enum('draft','processing','completed','failed') DEFAULT 'draft',
+  `total_recipients` int(11) DEFAULT 0,
+  `sent_count` int(11) DEFAULT 0,
+  `failed_count` int(11) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `completed_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `status` (`status`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Add foreign key constraints for new tables
+--
+
+ALTER TABLE `system_logs` ADD CONSTRAINT `fk_system_logs_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+-- --------------------------------------------------------
+
+--
+-- Insert default notification templates
+--
+
+INSERT INTO `notification_templates` (`name`, `type`, `subject`, `content`, `variables`) VALUES
+('Welcome Email', 'email', 'Welcome to SJA Foundation', 
+ 'Dear {{name}},\n\nWelcome to SJA Foundation Investment Platform!\n\nYour account has been successfully created with the following details:\nEmail: {{email}}\nUser ID: {{user_id}}\n\nPlease complete your KYC verification to start investing.\n\nBest regards,\nSJA Foundation Team', 
+ 'name,email,user_id'),
+ 
+('Investment Confirmation', 'email', 'Investment Confirmation - {{plan_name}}',
+ 'Dear {{name}},\n\nYour investment has been successfully processed:\n\nPlan: {{plan_name}}\nAmount: ₹{{amount}}\nDuration: {{duration}} months\nExpected Returns: {{returns}}%\n\nThank you for investing with us!\n\nBest regards,\nSJA Foundation Team',
+ 'name,plan_name,amount,duration,returns'),
+ 
+('KYC Approved', 'email', 'KYC Verification Approved',
+ 'Dear {{name}},\n\nCongratulations! Your KYC verification has been approved.\n\nYou can now:\n- Make investments\n- Withdraw funds\n- Access all platform features\n\nThank you for completing the verification process.\n\nBest regards,\nSJA Foundation Team',
+ 'name'),
+ 
+('Commission Earned', 'email', 'Commission Earned - ₹{{amount}}',
+ 'Dear {{name}},\n\nYou have earned a commission of ₹{{amount}} from your referral network.\n\nCommission Details:\n- Level: {{level}}\n- From User: {{from_user}}\n- Investment Amount: ₹{{investment_amount}}\n- Commission Rate: {{rate}}%\n\nThe commission has been added to your wallet.\n\nBest regards,\nSJA Foundation Team',
+ 'name,amount,level,from_user,investment_amount,rate');
+
 COMMIT; 

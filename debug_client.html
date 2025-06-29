@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Client Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Client Dashboard Debug</h1>
+    
+    <div class="test-section">
+        <h2>Authentication Test</h2>
+        <button onclick="testAuth()">Test Authentication</button>
+        <div id="authResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Dashboard API Test</h2>
+        <button onclick="testDashboard()">Test Dashboard API</button>
+        <div id="dashboardResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Investment Plans Test</h2>
+        <button onclick="testInvestmentPlans()">Test Investment Plans</button>
+        <div id="investmentResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Transactions Test</h2>
+        <button onclick="testTransactions()">Test Transactions</button>
+        <div id="transactionResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Login Test</h2>
+        <button onclick="testLogin()">Login as Test User</button>
+        <div id="loginResult"></div>
+    </div>
+
+    <script>
+        async function testAuth() {
+            const resultDiv = document.getElementById('authResult');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('../api/client/auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'validate'
+                    })
+                });
+                
+                const result = await response.json();
+                resultDiv.innerHTML = `<pre class="${result.success ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testDashboard() {
+            const resultDiv = document.getElementById('dashboardResult');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('../api/client/dashboard.php');
+                const result = await response.json();
+                resultDiv.innerHTML = `<pre class="${result.success ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testInvestmentPlans() {
+            const resultDiv = document.getElementById('investmentResult');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('../api/client/investments.php?action=plans');
+                const result = await response.json();
+                resultDiv.innerHTML = `<pre class="${result.success ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testTransactions() {
+            const resultDiv = document.getElementById('transactionResult');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('../api/client/transactions.php?action=list');
+                const result = await response.json();
+                resultDiv.innerHTML = `<pre class="${result.success ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testLogin() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = 'Testing login...';
+            
+            try {
+                const response = await fetch('../api/client/auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'login',
+                        email: 'test@sja.com',
+                        password: 'password123'
+                    })
+                });
+                
+                const result = await response.json();
+                resultDiv.innerHTML = `<pre class="${result.success ? 'success' : 'error'}">${JSON.stringify(result, null, 2)}</pre>`;
+                
+                if (result.success) {
+                    resultDiv.innerHTML += '<div class="success">Login successful! Now test other APIs.</div>';
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html> 

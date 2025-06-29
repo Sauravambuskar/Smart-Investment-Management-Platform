@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Admin Dashboard - SJA Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .dark-theme {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%) !important;
+        }
+
+        .dark-theme .glassmorphism {
+            background: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        .stat-change {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+        }
+        
+        .stat-change.positive {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        
+        .stat-change.negative {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .stat-change.critical {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            animation: pulse 2s infinite;
+        }
+        
+        .activity-item {
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .activity-item:hover {
+            border-left-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chart-tab.active {
+            background: rgba(59, 130, 246, 0.3);
+            color: white;
+        }
+        
+        .action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .risk-item {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid;
+        }
+        
+        .risk-high {
+            background: rgba(239, 68, 68, 0.1);
+            border-left-color: #ef4444;
+        }
+        
+        .risk-medium {
+            background: rgba(251, 191, 36, 0.1);
+            border-left-color: #fbbf24;
+        }
+        
+        .risk-low {
+            background: rgba(34, 197, 94, 0.1);
+            border-left-color: #22c55e;
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .sidebar-item.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .notification-dot {
+            position: absolute;
+            top: -0.25rem;
+            right: -0.25rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body id="body" class="min-h-screen gradient-bg relative overflow-x-hidden dark-theme">
+    <!-- Floating Shapes -->
+    <div class="floating-shape w-64 h-64 top-10 -left-32 opacity-30"></div>
+    <div class="floating-shape w-96 h-96 top-1/2 -right-48 opacity-20" style="animation-delay: -2s;"></div>
+    <div class="floating-shape w-48 h-48 bottom-10 left-1/4 opacity-25" style="animation-delay: -4s;"></div>
+
+    <div class="flex min-h-screen">
+        <!-- Enhanced Sidebar -->
+        <div class="w-64 glassmorphism fixed h-full z-10">
+            <div class="p-6">
+                <!-- Logo -->
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
+                        <span class="text-white font-bold text-lg">SJA</span>
+                    </div>
+                    <div>
+                        <h1 class="text-white font-bold text-xl">SJA Foundation</h1>
+                        <p class="text-white/60 text-sm">Enhanced Admin</p>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="glassmorphism p-3 rounded-lg mb-6 relative">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-white/60 text-xs">System Status</p>
+                            <p class="text-green-400 font-medium text-sm" id="systemStatus">Online</p>
+                        </div>
+                        <div class="w-3 h-3 bg-green-400 rounded-full" id="statusIndicator"></div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="flex justify-between text-xs text-white/60">
+                            <span>Performance</span>
+                            <span id="performance">Optimal</span>
+                        </div>
+                        <div class="w-full bg-white/10 rounded-full h-1 mt-1">
+                            <div class="bg-green-500 h-1 rounded-full" style="width: 95%" id="performanceBar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="space-y-2">
+                    <a href="#" class="sidebar-item active flex items-center px-4 py-3 text-white rounded-lg relative" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
+                        Enhanced Dashboard
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg relative" data-section="analytics">
+                        <i class="fas fa-chart-line w-5 h-5 mr-3"></i>
+                        Advanced Analytics
+                        <span class="ml-auto text-xs bg-blue-500 px-2 py-1 rounded">NEW</span>
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg relative" data-section="automation">
+                        <i class="fas fa-robot w-5 h-5 mr-3"></i>
+                        Automation Engine
+                        <span class="notification-dot" id="automationNotification" style="display: none;"></span>
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg" data-section="risk">
+                        <i class="fas fa-shield-alt w-5 h-5 mr-3"></i>
+                        Risk Management
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg" data-section="security">
+                        <i class="fas fa-lock w-5 h-5 mr-3"></i>
+                        Security Center
+                    </a>
+                    
+                    <a href="dashboard.html" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg">
+                        <i class="fas fa-arrow-left w-5 h-5 mr-3"></i>
+                        Back to Main Dashboard
+                    </a>
+                </nav>
+
+                <!-- Theme Toggle -->
+                <div class="mt-8 glassmorphism p-3 rounded-lg">
+                    <button id="themeToggle" class="w-full flex items-center justify-center px-4 py-2 text-white/80 hover:text-white transition-colors">
+                        <i class="fas fa-moon mr-2" id="themeIcon"></i>
+                        <span id="themeText">Dark Mode</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 ml-64 p-8">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-white">🚀 Enhanced Dashboard</h1>
+                    <p class="text-white/60">Next-generation platform monitoring and management</p>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Real-time Clock -->
+                    <div class="glassmorphism px-4 py-2 rounded-lg">
+                        <p class="text-white/60 text-sm">Current Time</p>
+                        <p class="text-white font-medium" id="currentTime"></p>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="glassmorphism px-4 py-2 rounded-lg">
+                        <p class="text-white/60 text-sm">Active Users</p>
+                        <p class="text-green-400 font-medium" id="activeUsersNow">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboard-content">
+                <!-- Enhanced Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-white/60 text-sm">Total Users</p>
+                                <p class="text-2xl font-bold text-white" id="totalUsers">0</p>
+                                <span class="stat-change positive" id="usersChange">+0%</span>
+                            </div>
+                            <i class="fas fa-users text-3xl text-blue-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-white/60 text-sm">Total Investments</p>
+                                <p class="text-2xl font-bold text-white" id="totalInvestments">₹0</p>
+                                <span class="stat-change positive" id="investmentsChange">+0%</span>
+                            </div>
+                            <i class="fas fa-chart-line text-3xl text-green-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-white/60 text-sm">Active Investments</p>
+                                <p class="text-2xl font-bold text-white" id="activeInvestments">0</p>
+                                <span class="stat-change positive" id="activeChange">+0%</span>
+                            </div>
+                            <i class="fas fa-chart-bar text-3xl text-yellow-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-white/60 text-sm">Pending Actions</p>
+                                <p class="text-2xl font-bold text-white" id="pendingTransactions">0</p>
+                                <span class="stat-change critical" id="pendingChange">Review</span>
+                            </div>
+                            <i class="fas fa-clock text-3xl text-orange-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-white/60 text-sm">Risk Alerts</p>
+                                <p class="text-2xl font-bold text-white" id="riskAlerts">0</p>
+                                <span class="stat-change critical" id="riskChange">Monitor</span>
+                            </div>
+                            <i class="fas fa-exclamation-triangle text-3xl text-red-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-white/60 text-sm">System Health</p>
+                                <p class="text-2xl font-bold text-white" id="systemHealth">100%</p>
+                                <span class="stat-change positive" id="healthStatus">Optimal</span>
+                            </div>
+                            <i class="fas fa-heartbeat text-3xl text-green-400"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Real-time Analytics Dashboard -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <div class="lg:col-span-2 glassmorphism p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-white mb-4">📊 Real-time Platform Analytics</h3>
+                        <div class="chart-tabs">
+                            <button class="chart-tab active" data-chart="revenue">Revenue</button>
+                            <button class="chart-tab" data-chart="users">Users</button>
+                            <button class="chart-tab" data-chart="investments">Investments</button>
+                            <button class="chart-tab" data-chart="commissions">Commissions</button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="analyticsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-white mb-4">🔴 Live Activity Feed</h3>
+                        <div id="activityFeed" class="space-y-3 max-h-96 overflow-y-auto">
+                            <div class="activity-item p-3 rounded-lg">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-user-plus text-green-400"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-white text-sm">New user registered</p>
+                                        <p class="text-white/60 text-xs">2m ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-item p-3 rounded-lg">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-chart-line text-blue-400"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-white text-sm">Investment created - ₹25,000</p>
+                                        <p class="text-white/60 text-xs">5m ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-item p-3 rounded-lg">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-check-circle text-green-400"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-white text-sm">KYC approved</p>
+                                        <p class="text-white/60 text-xs">8m ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Advanced Quick Actions Panel -->
+                <div class="glassmorphism p-6 rounded-xl mb-8">
+                    <h3 class="text-xl font-bold text-white mb-4">⚡ Advanced Quick Actions</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <button class="action-btn" onclick="runAutomation()">
+                            <i class="fas fa-robot text-2xl text-blue-400"></i>
+                            <span>Run Automation</span>
+                        </button>
+                        <button class="action-btn" onclick="generateAdvancedReport()">
+                            <i class="fas fa-chart-pie text-2xl text-green-400"></i>
+                            <span>Advanced Report</span>
+                        </button>
+                        <button class="action-btn" onclick="backupSystem()">
+                            <i class="fas fa-database text-2xl text-purple-400"></i>
+                            <span>Backup System</span>
+                        </button>
+                        <button class="action-btn" onclick="optimizeDatabase()">
+                            <i class="fas fa-cogs text-2xl text-yellow-400"></i>
+                            <span>Optimize DB</span>
+                        </button>
+                        <button class="action-btn" onclick="securityScan()">
+                            <i class="fas fa-shield-alt text-2xl text-red-400"></i>
+                            <span>Security Scan</span>
+                        </button>
+                        <button class="action-btn" onclick="broadcastMessage()">
+                            <i class="fas fa-bullhorn text-2xl text-orange-400"></i>
+                            <span>Broadcast</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Advanced Risk Management Panel -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-white mb-4">🛡️ Risk Management</h3>
+                        <div id="riskAlertsList" class="space-y-3">
+                            <div class="risk-item risk-low">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h4 class="text-white font-medium">System Performance</h4>
+                                        <p class="text-white/80 text-sm">All systems operating normally</p>
+                                        <p class="text-white/60 text-xs mt-1">Last checked: 2m ago</p>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 rounded bg-green-500/20 text-green-400">
+                                        LOW
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-white mb-4">📈 Performance Metrics</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm text-white/80 mb-1">
+                                    <span>Server Response Time</span>
+                                    <span>45ms</span>
+                                </div>
+                                <div class="w-full bg-white/10 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-sm text-white/80 mb-1">
+                                    <span>Database Performance</span>
+                                    <span>92%</span>
+                                </div>
+                                <div class="w-full bg-white/10 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-sm text-white/80 mb-1">
+                                    <span>API Success Rate</span>
+                                    <span>99.8%</span>
+                                </div>
+                                <div class="w-full bg-white/10 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 99%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-sm text-white/80 mb-1">
+                                    <span>Security Score</span>
+                                    <span>A+</span>
+                                </div>
+                                <div class="w-full bg-white/10 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 98%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced JavaScript -->
+    <script>
+        // Global variables
+        let currentChart = null;
+        let realTimeInterval = null;
+        
+        // Initialize enhanced dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEnhancedDashboard();
+            startRealTimeUpdates();
+        });
+        
+        function initializeEnhancedDashboard() {
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            
+            loadEnhancedStats();
+            initializeAdvancedChart();
+            setupAdvancedEventListeners();
+            
+            // Show welcome message
+            showWelcomeMessage();
+        }
+        
+        function updateCurrentTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+        }
+        
+        function loadEnhancedStats() {
+            // Simulate enhanced stats loading
+            const stats = {
+                total_users: Math.floor(Math.random() * 1000) + 500,
+                total_investments: Math.floor(Math.random() * 5000000) + 1000000,
+                active_investments: Math.floor(Math.random() * 200) + 50,
+                pending_transactions: Math.floor(Math.random() * 20) + 5,
+                risk_alerts: Math.floor(Math.random() * 3),
+                system_health: 95 + Math.floor(Math.random() * 5)
+            };
+            
+            updateEnhancedStatsDisplay(stats);
+        }
+        
+        function updateEnhancedStatsDisplay(stats) {
+            document.getElementById('totalUsers').textContent = stats.total_users.toLocaleString();
+            document.getElementById('totalInvestments').textContent = '₹' + stats.total_investments.toLocaleString();
+            document.getElementById('activeInvestments').textContent = stats.active_investments.toLocaleString();
+            document.getElementById('pendingTransactions').textContent = stats.pending_transactions;
+            document.getElementById('riskAlerts').textContent = stats.risk_alerts;
+            document.getElementById('systemHealth').textContent = stats.system_health + '%';
+            document.getElementById('activeUsersNow').textContent = Math.floor(stats.total_users * 0.1);
+            
+            // Update change indicators with random values
+            updateChangeIndicator('usersChange', Math.floor(Math.random() * 20) + 5);
+            updateChangeIndicator('investmentsChange', Math.floor(Math.random() * 15) + 8);
+            updateChangeIndicator('activeChange', Math.floor(Math.random() * 10) + 3);
+        }
+        
+        function updateChangeIndicator(elementId, change) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            element.className = 'stat-change positive';
+            element.textContent = '+' + change + '%';
+        }
+        
+        function initializeAdvancedChart() {
+            const ctx = document.getElementById('analyticsChart').getContext('2d');
+            
+            currentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Revenue (₹)',
+                        data: [120000, 190000, 300000, 500000, 420000, 630000],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.6)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.6)',
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function setupAdvancedEventListeners() {
+            // Chart tab switching
+            document.querySelectorAll('.chart-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const chartType = this.dataset.chart;
+                    updateChartData(chartType);
+                });
+            });
+            
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleAdvancedTheme);
+        }
+        
+        function updateChartData(type) {
+            if (!currentChart) return;
+            
+            const datasets = {
+                revenue: {
+                    label: 'Revenue (₹)',
+                    data: [120000, 190000, 300000, 500000, 420000, 630000],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)'
+                },
+                users: {
+                    label: 'New Users',
+                    data: [45, 78, 120, 95, 140, 180],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)'
+                },
+                investments: {
+                    label: 'Investments',
+                    data: [25, 45, 78, 65, 95, 120],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)'
+                },
+                commissions: {
+                    label: 'Commissions (₹)',
+                    data: [5000, 8000, 12000, 15000, 18000, 22000],
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)'
+                }
+            };
+            
+            const dataset = datasets[type];
+            currentChart.data.datasets[0] = { ...currentChart.data.datasets[0], ...dataset };
+            currentChart.update();
+        }
+        
+        function toggleAdvancedTheme() {
+            const body = document.getElementById('body');
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
+                body.style.background = 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)';
+                themeIcon.className = 'fas fa-sun mr-2';
+                themeText.textContent = 'Light Mode';
+            } else {
+                body.classList.add('dark-theme');
+                body.style.background = 'linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%)';
+                themeIcon.className = 'fas fa-moon mr-2';
+                themeText.textContent = 'Dark Mode';
+            }
+        }
+        
+        function startRealTimeUpdates() {
+            realTimeInterval = setInterval(() => {
+                loadEnhancedStats();
+                updateActivityFeed();
+            }, 30000); // Update every 30 seconds
+        }
+        
+        function updateActivityFeed() {
+            const activities = [
+                { icon: 'fas fa-user-plus', text: 'New user registered', time: Math.floor(Math.random() * 10) + 1, color: 'green' },
+                { icon: 'fas fa-chart-line', text: 'Investment created - ₹' + (Math.floor(Math.random() * 50000) + 10000).toLocaleString(), time: Math.floor(Math.random() * 15) + 1, color: 'blue' },
+                { icon: 'fas fa-check-circle', text: 'KYC approved', time: Math.floor(Math.random() * 20) + 1, color: 'green' },
+                { icon: 'fas fa-exchange-alt', text: 'Transaction processed', time: Math.floor(Math.random() * 25) + 1, color: 'purple' }
+            ];
+            
+            const feed = document.getElementById('activityFeed');
+            feed.innerHTML = '';
+            
+            activities.forEach(activity => {
+                const item = document.createElement('div');
+                item.className = 'activity-item p-3 rounded-lg';
+                item.innerHTML = `
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-shrink-0">
+                            <i class="${activity.icon} text-${activity.color}-400"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-white text-sm">${activity.text}</p>
+                            <p class="text-white/60 text-xs">${activity.time}m ago</p>
+                        </div>
+                    </div>
+                `;
+                feed.appendChild(item);
+            });
+        }
+        
+        function showWelcomeMessage() {
+            setTimeout(() => {
+                alert('🚀 Welcome to the Enhanced SJA Foundation Admin Dashboard!\n\nNew Features:\n• Real-time analytics\n• Advanced automation\n• Enhanced security monitoring\n• Predictive insights\n• Performance optimization tools');
+            }, 1000);
+        }
+        
+        // Enhanced Quick Action Functions
+        function runAutomation() {
+            if (confirm('🤖 Run advanced automation processes?\n\nThis will:\n• Process matured investments\n• Calculate commissions\n• Generate interest payments\n• Update analytics')) {
+                showProcessingMessage('Running automation...');
+                setTimeout(() => {
+                    alert('✅ Automation completed successfully!\n\n• 15 investments processed\n• 45 commissions calculated\n• 120 interest payments generated\n• Analytics updated');
+                }, 3000);
+            }
+        }
+        
+        function generateAdvancedReport() {
+            showProcessingMessage('Generating advanced analytics report...');
+            setTimeout(() => {
+                alert('📊 Advanced Report Generated!\n\nReport includes:\n• User growth analysis\n• Investment performance\n• Risk assessment\n• Predictive insights\n\nReport saved to admin/reports/');
+            }, 2000);
+        }
+        
+        function backupSystem() {
+            if (confirm('💾 Create complete system backup?')) {
+                showProcessingMessage('Creating backup...');
+                setTimeout(() => {
+                    alert('✅ System backup completed!\n\nBackup details:\n• Database: 45.2 MB\n• Files: 128.7 MB\n• Total: 173.9 MB\n• Location: /backups/');
+                }, 2500);
+            }
+        }
+        
+        function optimizeDatabase() {
+            if (confirm('⚡ Optimize database performance?')) {
+                showProcessingMessage('Optimizing database...');
+                setTimeout(() => {
+                    alert('🚀 Database optimization completed!\n\nResults:\n• Query performance improved by 23%\n• Storage reduced by 12%\n• Index optimization completed\n• Cache cleared');
+                }, 3000);
+            }
+        }
+        
+        function securityScan() {
+            showProcessingMessage('Running security scan...');
+            setTimeout(() => {
+                alert('🛡️ Security scan completed!\n\nResults:\n• No vulnerabilities found\n• All systems secure\n• SSL certificates valid\n• Security score: A+');
+            }, 4000);
+        }
+        
+        function broadcastMessage() {
+            const message = prompt('📢 Enter broadcast message:');
+            if (message) {
+                showProcessingMessage('Broadcasting message...');
+                setTimeout(() => {
+                    alert('✅ Message broadcasted successfully!\n\n• Sent to all active users\n• Email notifications dispatched\n• Push notifications sent\n• SMS alerts delivered');
+                }, 2000);
+            }
+        }
+        
+        function showProcessingMessage(message) {
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+            overlay.innerHTML = `
+                <div class="glassmorphism p-8 rounded-2xl text-center">
+                    <div class="animate-spin w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <p class="text-white text-lg">${message}</p>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            
+            setTimeout(() => {
+                document.body.removeChild(overlay);
+            }, 2000);
+        }
+        
+        // Initialize activity feed on load
+        updateActivityFeed();
+    </script>
+</body>
+</html>

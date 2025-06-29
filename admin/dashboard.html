@@ -215,6 +215,27 @@
                         Reports & Analytics
                     </a>
                     
+                    <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg" data-section="activity">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        </svg>
+                        User Activity
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg" data-section="system">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        System Config
+                    </a>
+                    
+                    <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg" data-section="notifications">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM11.613 15.931l-.184-.497c-.472-1.283-.708-1.924-.982-2.402A2.5 2.5 0 009 11.5H7.5A2.5 2.5 0 005 9V8a7 7 0 1114 0v1a2.5 2.5 0 01-2.5 2.5H15a2.5 2.5 0 00-1.447 1.532c-.274.478-.51 1.119-.982 2.402l-.184.497"></path>
+                        </svg>
+                        Notifications
+                    </a>
+                    
                     <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white rounded-lg" data-section="settings">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -1388,6 +1409,441 @@
                     </div>
                 </div>
             </div>
+
+            <!-- User Activity Section -->
+            <div id="activity-content" class="hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-white mb-2">User Activity Monitor</h2>
+                    <p class="text-gray-300">Track user activities, audit logs, and system events</p>
+                </div>
+
+                <!-- Activity Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Online Users</p>
+                                <p class="text-2xl font-bold text-green-400" id="online-users-count">0</p>
+                            </div>
+                            <div class="p-3 bg-green-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Today's Activities</p>
+                                <p class="text-2xl font-bold text-blue-400" id="today-activities">0</p>
+                            </div>
+                            <div class="p-3 bg-blue-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Login Attempts</p>
+                                <p class="text-2xl font-bold text-yellow-400" id="today-logins">0</p>
+                            </div>
+                            <div class="p-3 bg-yellow-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Failed Logins</p>
+                                <p class="text-2xl font-bold text-red-400" id="failed-logins">0</p>
+                            </div>
+                            <div class="p-3 bg-red-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Filters -->
+                <div class="glassmorphism p-6 rounded-xl mb-6">
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Activity Type</label>
+                            <select id="activity-type-filter" class="bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2">
+                                <option value="">All Activities</option>
+                                <option value="login">Login</option>
+                                <option value="logout">Logout</option>
+                                <option value="investment">Investment</option>
+                                <option value="withdrawal">Withdrawal</option>
+                                <option value="kyc">KYC</option>
+                                <option value="profile_update">Profile Update</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">User</label>
+                            <input type="text" id="activity-user-search" placeholder="Search by user..." 
+                                   class="bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2">
+                        </div>
+                        <div class="flex gap-2 items-end">
+                            <button onclick="loadUserActivity()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                Refresh
+                            </button>
+                            <button onclick="exportActivityLog()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Log Table -->
+                <div class="glassmorphism p-6 rounded-xl">
+                    <h3 class="text-lg font-bold text-white mb-4">Recent Activity</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-white/10">
+                                    <th class="pb-3 text-gray-300 font-medium text-left">User</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Action</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Details</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">IP Address</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activity-table-body">
+                                <!-- Activities will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Configuration Section -->
+            <div id="system-content" class="hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-white mb-2">System Configuration</h2>
+                    <p class="text-gray-300">Monitor system health, manage configurations, and maintain the platform</p>
+                </div>
+
+                <!-- System Status Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">System Status</p>
+                                <p class="text-2xl font-bold text-green-400">Online</p>
+                            </div>
+                            <div class="p-3 bg-green-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Maintenance Mode</p>
+                                <p class="text-2xl font-bold text-blue-400" id="maintenance-status">Off</p>
+                            </div>
+                            <div class="p-3 bg-blue-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Database Size</p>
+                                <p class="text-2xl font-bold text-purple-400" id="database-size">--</p>
+                            </div>
+                            <div class="p-3 bg-purple-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Last Backup</p>
+                                <p class="text-2xl font-bold text-yellow-400" id="last-backup">--</p>
+                            </div>
+                            <div class="p-3 bg-yellow-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <h3 class="text-lg font-bold text-white mb-4">Maintenance</h3>
+                        <div class="space-y-3">
+                            <button onclick="toggleMaintenanceMode()" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg">
+                                Toggle Maintenance Mode
+                            </button>
+                            <button onclick="optimizeDatabase()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                Optimize Database
+                            </button>
+                            <button onclick="clearSystemLogs()" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                                Clear System Logs
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <h3 class="text-lg font-bold text-white mb-4">Backup & Restore</h3>
+                        <div class="space-y-3">
+                            <button onclick="createBackup()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                                Create Backup Now
+                            </button>
+                            <button onclick="downloadBackup()" class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg">
+                                Download Latest Backup
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <h3 class="text-lg font-bold text-white mb-4">System Info</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-300">PHP Version:</span>
+                                <span class="text-white" id="php-version">--</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-300">Memory Limit:</span>
+                                <span class="text-white" id="memory-limit">--</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-300">Disk Space:</span>
+                                <span class="text-white" id="disk-space">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Logs -->
+                <div class="glassmorphism p-6 rounded-xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-white">System Logs</h3>
+                        <select id="log-type-filter" class="bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2">
+                            <option value="error">Error Logs</option>
+                            <option value="admin">Admin Actions</option>
+                            <option value="backup">Backup Logs</option>
+                            <option value="maintenance">Maintenance Logs</option>
+                        </select>
+                    </div>
+                    <div class="overflow-x-auto max-h-96">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-white/10">
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Type</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Message</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="system-logs-body">
+                                <!-- System logs will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="notifications-content" class="hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-white mb-2">Notification Center</h2>
+                    <p class="text-gray-300">Manage notifications, templates, and communication with users</p>
+                </div>
+
+                <!-- Notification Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Total Sent</p>
+                                <p class="text-2xl font-bold text-green-400" id="notifications-sent">0</p>
+                            </div>
+                            <div class="p-3 bg-green-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Pending</p>
+                                <p class="text-2xl font-bold text-yellow-400" id="notifications-pending">0</p>
+                            </div>
+                            <div class="p-3 bg-yellow-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Failed</p>
+                                <p class="text-2xl font-bold text-red-400" id="notifications-failed">0</p>
+                            </div>
+                            <div class="p-3 bg-red-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Today's Sent</p>
+                                <p class="text-2xl font-bold text-blue-400" id="notifications-today">0</p>
+                            </div>
+                            <div class="p-3 bg-blue-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM11.613 15.931l-.184-.497c-.472-1.283-.708-1.924-.982-2.402A2.5 2.5 0 009 11.5H7.5A2.5 2.5 0 005 9V8a7 7 0 1114 0v1a2.5 2.5 0 01-2.5 2.5H15a2.5 2.5 0 00-1.447 1.532c-.274.478-.51 1.119-.982 2.402l-.184.497"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <h3 class="text-lg font-bold text-white mb-4">Send Notification</h3>
+                        <form id="send-notification-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Recipient</label>
+                                <select name="recipient_type" class="w-full bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2">
+                                    <option value="all">All Users</option>
+                                    <option value="admin">Administrators</option>
+                                    <option value="user">Regular Users</option>
+                                    <option value="specific">Specific User</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Type</label>
+                                <select name="type" class="w-full bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2">
+                                    <option value="email">Email</option>
+                                    <option value="sms">SMS</option>
+                                    <option value="push">Push Notification</option>
+                                    <option value="system">System Alert</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Title</label>
+                                <input type="text" name="title" class="w-full bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                                <textarea name="message" rows="3" class="w-full bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                Send Notification
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="glassmorphism p-6 rounded-xl">
+                        <h3 class="text-lg font-bold text-white mb-4">Broadcast Message</h3>
+                        <form id="broadcast-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Target Audience</label>
+                                <select name="target_role" class="w-full bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2">
+                                    <option value="all">All Users</option>
+                                    <option value="admin">Administrators</option>
+                                    <option value="user">Regular Users</option>
+                                    <option value="agent">Agents</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Priority</label>
+                                <select name="priority" class="w-full bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2">
+                                    <option value="normal">Normal</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+                                <input type="text" name="title" class="w-full bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                                <textarea name="message" rows="3" class="w-full bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg">
+                                Send Broadcast
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Notification History -->
+                <div class="glassmorphism p-6 rounded-xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-white">Notification History</h3>
+                        <div class="flex gap-2">
+                            <select id="notification-status-filter" class="bg-white/10 border border-white/20 text-white rounded-lg px-3 py-2">
+                                <option value="">All Status</option>
+                                <option value="sent">Sent</option>
+                                <option value="pending">Pending</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                            <button onclick="retryFailedNotifications()" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg">
+                                Retry Failed
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-white/10">
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Type</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Title</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Recipients</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Status</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Sent At</th>
+                                    <th class="pb-3 text-gray-300 font-medium text-left">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notifications-table-body">
+                                <!-- Notifications will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1414,6 +1870,9 @@
             setupKYCManagement();
             setupTransactionManagement();
             setupReports();
+            setupUserActivity();
+            setupSystemConfig();
+            setupNotifications();
             setupSettings();
             loadDashboardData();
         });
@@ -1455,6 +1914,15 @@
                         } else if (sectionName === 'reports') {
                             setupReportDates();
                             loadQuickStats();
+                        } else if (sectionName === 'activity') {
+                            setupUserActivity();
+                            loadUserActivity();
+                        } else if (sectionName === 'system') {
+                            setupSystemConfig();
+                            loadSystemInfo();
+                        } else if (sectionName === 'notifications') {
+                            setupNotifications();
+                            loadNotifications();
                         }
                     }
                 });
@@ -2678,6 +3146,480 @@
         // Export Report
         function exportReport() {
             showNotification('Export report functionality will be implemented', 'info');
+        }
+
+        // Setup User Activity Management
+        function setupUserActivity() {
+            document.getElementById('activity-type-filter').addEventListener('change', loadUserActivity);
+            document.getElementById('activity-user-search').addEventListener('input', loadUserActivity);
+        }
+
+        // Load User Activity
+        async function loadUserActivity() {
+            try {
+                const typeFilter = document.getElementById('activity-type-filter').value;
+                const userSearch = document.getElementById('activity-user-search').value;
+                
+                let url = '../api/admin/user-activity.php?action=activity&limit=50';
+                if (typeFilter) url += `&type=${typeFilter}`;
+                if (userSearch) url += `&user_search=${userSearch}`;
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.success) {
+                    displayUserActivity(data.activities);
+                    loadActivityStats();
+                } else {
+                    showNotification('Failed to load user activities', 'error');
+                }
+            } catch (error) {
+                showNotification('Error loading user activities', 'error');
+            }
+        }
+
+        // Display User Activity
+        function displayUserActivity(activities) {
+            const tbody = document.getElementById('activity-table-body');
+            
+            if (activities.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-gray-400">
+                            No activities found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = activities.map(activity => `
+                <tr class="border-b border-white/5 hover:bg-white/5">
+                    <td class="py-3">
+                        <div>
+                            <div class="text-white font-medium">${activity.user_name || 'System'}</div>
+                            <div class="text-sm text-gray-400">${activity.user_email || ''}</div>
+                        </div>
+                    </td>
+                    <td class="py-3">
+                        <span class="px-2 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300">
+                            ${activity.action}
+                        </span>
+                    </td>
+                    <td class="py-3 text-gray-300 max-w-xs truncate">
+                        ${activity.new_values || activity.old_values || 'N/A'}
+                    </td>
+                    <td class="py-3 text-gray-300">${activity.ip_address || 'N/A'}</td>
+                    <td class="py-3 text-gray-300">${new Date(activity.created_at).toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Load Activity Stats
+        async function loadActivityStats() {
+            try {
+                const response = await fetch('../api/admin/user-activity.php?action=stats');
+                const data = await response.json();
+
+                if (data.success) {
+                    const stats = data.stats;
+                    document.getElementById('online-users-count').textContent = stats.online_users || 0;
+                    document.getElementById('today-activities').textContent = stats.today_activities || 0;
+                    document.getElementById('today-logins').textContent = stats.today_logins || 0;
+                    document.getElementById('failed-logins').textContent = stats.today_failed_logins || 0;
+                }
+            } catch (error) {
+                console.error('Error loading activity stats:', error);
+            }
+        }
+
+        // Export Activity Log
+        function exportActivityLog() {
+            showNotification('Exporting activity log...', 'info');
+            // Implementation for CSV export
+        }
+
+        // Setup System Configuration
+        function setupSystemConfig() {
+            document.getElementById('log-type-filter').addEventListener('change', loadSystemLogs);
+        }
+
+        // Load System Info
+        async function loadSystemInfo() {
+            try {
+                const response = await fetch('../api/admin/system-config.php?action=system_info');
+                const data = await response.json();
+
+                if (data.success) {
+                    const info = data.system_info;
+                    document.getElementById('php-version').textContent = info.php_version;
+                    document.getElementById('memory-limit').textContent = info.memory_limit;
+                    
+                    const freeSpace = (info.disk_free_space / 1024 / 1024 / 1024).toFixed(2);
+                    document.getElementById('disk-space').textContent = `${freeSpace} GB free`;
+                }
+
+                // Load maintenance status
+                const maintenanceResponse = await fetch('../api/admin/system-config.php?action=maintenance');
+                const maintenanceData = await maintenanceResponse.json();
+                
+                if (maintenanceData.success) {
+                    document.getElementById('maintenance-status').textContent = 
+                        maintenanceData.maintenance_mode === 'on' ? 'On' : 'Off';
+                }
+
+                loadSystemLogs();
+            } catch (error) {
+                console.error('Error loading system info:', error);
+            }
+        }
+
+        // Load System Logs
+        async function loadSystemLogs() {
+            try {
+                const logType = document.getElementById('log-type-filter').value;
+                const response = await fetch(`../api/admin/system-config.php?action=logs&type=${logType}&limit=20`);
+                const data = await response.json();
+
+                if (data.success) {
+                    displaySystemLogs(data.logs);
+                }
+            } catch (error) {
+                console.error('Error loading system logs:', error);
+            }
+        }
+
+        // Display System Logs
+        function displaySystemLogs(logs) {
+            const tbody = document.getElementById('system-logs-body');
+            
+            if (logs.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="py-4 text-center text-gray-400">
+                            No logs found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = logs.map(log => `
+                <tr class="border-b border-white/5">
+                    <td class="py-2">
+                        <span class="px-2 py-1 text-xs rounded-full ${getLogTypeColor(log.log_type)}">
+                            ${log.log_type}
+                        </span>
+                    </td>
+                    <td class="py-2 text-gray-300 max-w-md truncate">${log.message}</td>
+                    <td class="py-2 text-gray-300 text-sm">${new Date(log.created_at).toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Get Log Type Color
+        function getLogTypeColor(type) {
+            const colors = {
+                error: 'bg-red-500/20 text-red-300',
+                warning: 'bg-yellow-500/20 text-yellow-300',
+                info: 'bg-blue-500/20 text-blue-300',
+                admin: 'bg-purple-500/20 text-purple-300',
+                backup: 'bg-green-500/20 text-green-300',
+                maintenance: 'bg-orange-500/20 text-orange-300'
+            };
+            return colors[type] || 'bg-gray-500/20 text-gray-300';
+        }
+
+        // System Actions
+        async function toggleMaintenanceMode() {
+            try {
+                const currentStatus = document.getElementById('maintenance-status').textContent.toLowerCase();
+                const newMode = currentStatus === 'on' ? 'off' : 'on';
+                
+                const formData = new FormData();
+                formData.append('action', 'maintenance_toggle');
+                formData.append('mode', newMode);
+
+                const response = await fetch('../api/admin/system-config.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('maintenance-status').textContent = newMode === 'on' ? 'On' : 'Off';
+                    showNotification(data.message, 'success');
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Error toggling maintenance mode', 'error');
+            }
+        }
+
+        async function optimizeDatabase() {
+            try {
+                const formData = new FormData();
+                formData.append('action', 'optimize_database');
+
+                const response = await fetch('../api/admin/system-config.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Error optimizing database', 'error');
+            }
+        }
+
+        async function createBackup() {
+            try {
+                const formData = new FormData();
+                formData.append('action', 'backup_database');
+
+                const response = await fetch('../api/admin/system-config.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showNotification(`Backup created: ${data.backup_file}`, 'success');
+                    document.getElementById('last-backup').textContent = 'Just now';
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Error creating backup', 'error');
+            }
+        }
+
+        async function clearSystemLogs() {
+            if (!confirm('Are you sure you want to clear system logs?')) return;
+
+            try {
+                const formData = new FormData();
+                formData.append('action', 'clear_logs');
+
+                const response = await fetch('../api/admin/system-config.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    loadSystemLogs();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Error clearing logs', 'error');
+            }
+        }
+
+        function downloadBackup() {
+            showNotification('Download backup functionality will be implemented', 'info');
+        }
+
+        // Setup Notifications
+        function setupNotifications() {
+            // Send Notification Form
+            document.getElementById('send-notification-form').addEventListener('submit', sendNotification);
+            
+            // Broadcast Form
+            document.getElementById('broadcast-form').addEventListener('submit', sendBroadcast);
+            
+            // Status Filter
+            document.getElementById('notification-status-filter').addEventListener('change', loadNotifications);
+        }
+
+        // Load Notifications
+        async function loadNotifications() {
+            try {
+                const statusFilter = document.getElementById('notification-status-filter').value;
+                let url = '../api/admin/notifications.php?action=notifications&limit=50';
+                if (statusFilter) url += `&status=${statusFilter}`;
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.success) {
+                    displayNotifications(data.notifications);
+                    loadNotificationStats();
+                } else {
+                    showNotification('Failed to load notifications', 'error');
+                }
+            } catch (error) {
+                showNotification('Error loading notifications', 'error');
+            }
+        }
+
+        // Display Notifications
+        function displayNotifications(notifications) {
+            const tbody = document.getElementById('notifications-table-body');
+            
+            if (notifications.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-gray-400">
+                            No notifications found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = notifications.map(notification => `
+                <tr class="border-b border-white/5 hover:bg-white/5">
+                    <td class="py-3">
+                        <span class="px-2 py-1 text-xs rounded-full ${getNotificationTypeColor(notification.type)}">
+                            ${notification.type}
+                        </span>
+                    </td>
+                    <td class="py-3 text-white max-w-xs truncate">${notification.title}</td>
+                    <td class="py-3 text-gray-300">${notification.user_name || 'All Users'}</td>
+                    <td class="py-3">
+                        <span class="px-2 py-1 text-xs rounded-full ${getNotificationStatusColor(notification.status)}">
+                            ${notification.status}
+                        </span>
+                    </td>
+                    <td class="py-3 text-gray-300 text-sm">
+                        ${notification.sent_at ? new Date(notification.sent_at).toLocaleString() : 'Not sent'}
+                    </td>
+                    <td class="py-3">
+                        <button onclick="viewNotification(${notification.id})" class="text-blue-400 hover:text-blue-300 text-sm">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Get Notification Type Color
+        function getNotificationTypeColor(type) {
+            const colors = {
+                email: 'bg-blue-500/20 text-blue-300',
+                sms: 'bg-green-500/20 text-green-300',
+                push: 'bg-purple-500/20 text-purple-300',
+                system: 'bg-orange-500/20 text-orange-300'
+            };
+            return colors[type] || 'bg-gray-500/20 text-gray-300';
+        }
+
+        // Get Notification Status Color
+        function getNotificationStatusColor(status) {
+            const colors = {
+                sent: 'bg-green-500/20 text-green-300',
+                pending: 'bg-yellow-500/20 text-yellow-300',
+                failed: 'bg-red-500/20 text-red-300',
+                read: 'bg-blue-500/20 text-blue-300'
+            };
+            return colors[status] || 'bg-gray-500/20 text-gray-300';
+        }
+
+        // Load Notification Stats
+        async function loadNotificationStats() {
+            try {
+                const response = await fetch('../api/admin/notifications.php?action=stats');
+                const data = await response.json();
+
+                if (data.success) {
+                    const stats = data.stats;
+                    document.getElementById('notifications-sent').textContent = stats.sent || 0;
+                    document.getElementById('notifications-pending').textContent = stats.pending || 0;
+                    document.getElementById('notifications-failed').textContent = stats.failed || 0;
+                    document.getElementById('notifications-today').textContent = stats.today_notifications || 0;
+                }
+            } catch (error) {
+                console.error('Error loading notification stats:', error);
+            }
+        }
+
+        // Send Notification
+        async function sendNotification(e) {
+            e.preventDefault();
+            
+            try {
+                const formData = new FormData(e.target);
+                formData.append('action', 'send_notification');
+
+                const response = await fetch('../api/admin/notifications.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showNotification('Notification sent successfully!', 'success');
+                    e.target.reset();
+                    loadNotifications();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Error sending notification', 'error');
+            }
+        }
+
+        // Send Broadcast
+        async function sendBroadcast(e) {
+            e.preventDefault();
+            
+            try {
+                const formData = new FormData(e.target);
+                formData.append('action', 'broadcast');
+
+                const response = await fetch('../api/admin/notifications.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showNotification(`Broadcast sent to ${data.total_recipients} users!`, 'success');
+                    e.target.reset();
+                    loadNotifications();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Error sending broadcast', 'error');
+            }
+        }
+
+        // Retry Failed Notifications
+        async function retryFailedNotifications() {
+            try {
+                const formData = new FormData();
+                formData.append('action', 'retry_failed');
+
+                const response = await fetch('../api/admin/notifications.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    loadNotifications();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Error retrying notifications', 'error');
+            }
+        }
+
+        // View Notification
+        function viewNotification(id) {
+            showNotification('View notification details functionality will be implemented', 'info');
         }
 
         // Placeholder functions for actions

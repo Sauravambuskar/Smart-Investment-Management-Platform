@@ -141,6 +141,39 @@
             <p class="text-gray-600 dark:text-gray-400">Here's your investment overview and latest updates.</p>
         </div>
 
+        <!-- Quick Actions -->
+        <div class="mb-8 fade-in">
+            <div class="glass dark:glass-dark rounded-2xl p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="showSection('investments')" class="flex flex-col items-center p-4 bg-blue-500 hover:bg-blue-600 rounded-xl text-white transition-colors">
+                        <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        <span class="text-sm font-medium">Invest Now</span>
+                    </button>
+                    <button onclick="showSection('wallet')" class="flex flex-col items-center p-4 bg-green-500 hover:bg-green-600 rounded-xl text-white transition-colors">
+                        <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                        <span class="text-sm font-medium">Add Money</span>
+                    </button>
+                    <button onclick="showSection('referrals')" class="flex flex-col items-center p-4 bg-purple-500 hover:bg-purple-600 rounded-xl text-white transition-colors">
+                        <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span class="text-sm font-medium">Refer & Earn</span>
+                    </button>
+                    <button onclick="showSection('profile')" class="flex flex-col items-center p-4 bg-orange-500 hover:bg-orange-600 rounded-xl text-white transition-colors">
+                        <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span class="text-sm font-medium">Profile</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <!-- Wallet Balance -->
@@ -149,6 +182,7 @@
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Wallet Balance</p>
                         <p class="text-2xl font-bold text-gray-900 dark:text-white" id="walletBalance">₹0.00</p>
+                        <p class="text-xs text-green-600 dark:text-green-400 mt-1" id="portfolioGrowth">+0.0%</p>
                     </div>
                     <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,6 +198,7 @@
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Total Invested</p>
                         <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalInvested">₹0.00</p>
+                        <p class="text-xs text-blue-600 dark:text-blue-400 mt-1" id="totalInvestments">0 investments</p>
                     </div>
                     <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,6 +214,7 @@
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Total Earned</p>
                         <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalEarned">₹0.00</p>
+                        <p class="text-xs text-purple-600 dark:text-purple-400 mt-1" id="referralEarnings">₹0 referral</p>
                     </div>
                     <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,6 +230,7 @@
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Active Investments</p>
                         <p class="text-2xl font-bold text-gray-900 dark:text-white" id="activeInvestments">0</p>
+                        <p class="text-xs text-orange-600 dark:text-orange-400 mt-1" id="totalReferrals">0 referrals</p>
                     </div>
                     <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -248,41 +285,339 @@
             </div>
         </div>
 
-        <!-- Recent Activity -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Recent Investments -->
-            <div class="glass dark:glass-dark rounded-2xl p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Investments</h3>
-                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
-                </div>
-                
-                <div id="recentInvestments" class="space-y-4">
-                    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
-                        <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                        <p>No investments yet</p>
-                        <p class="text-sm">Start your investment journey today!</p>
+        <!-- Main Content Sections -->
+        <div id="mainContent">
+            <!-- Dashboard Section (Default) -->
+            <div id="dashboardSection" class="section-content">
+                <!-- Recent Activity -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Recent Investments -->
+                    <div class="glass dark:glass-dark rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Investments</h3>
+                            <button onclick="showSection('investments')" class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+                        </div>
+                        
+                        <div id="recentInvestments" class="space-y-4">
+                            <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                                <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                                <p>No investments yet</p>
+                                <p class="text-sm">Start your investment journey today!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Transactions -->
+                    <div class="glass dark:glass-dark rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Transactions</h3>
+                            <button onclick="showSection('transactions')" class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+                        </div>
+                        
+                        <div id="recentTransactions" class="space-y-4">
+                            <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                                <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                </svg>
+                                <p>No transactions yet</p>
+                                <p class="text-sm">Your transaction history will appear here</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Transactions -->
-            <div class="glass dark:glass-dark rounded-2xl p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Transactions</h3>
-                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+            <!-- Investments Section -->
+            <div id="investmentsSection" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Investment Plans</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Choose from our carefully curated investment plans</p>
                 </div>
-                
-                <div id="recentTransactions" class="space-y-4">
-                    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
-                        <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                        </svg>
-                        <p>No transactions yet</p>
-                        <p class="text-sm">Your transaction history will appear here</p>
+
+                <!-- Investment Plans -->
+                <div id="investmentPlans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Plans will be loaded here -->
+                </div>
+
+                <!-- My Investments -->
+                <div class="glass dark:glass-dark rounded-2xl p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">My Investments</h3>
+                    <div id="myInvestments" class="space-y-4">
+                        <!-- Investments will be loaded here -->
                     </div>
+                </div>
+            </div>
+
+            <!-- Wallet Section -->
+            <div id="walletSection" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Wallet Management</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Manage your funds and transactions</p>
+                </div>
+
+                <!-- Wallet Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Add Money -->
+                    <div class="glass dark:glass-dark rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Add Money</h3>
+                        <form id="depositForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Amount</label>
+                                <input type="number" name="amount" min="100" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="Enter amount (Min: ₹100)" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Payment Method</label>
+                                <select name="payment_method" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                                    <option value="">Select payment method</option>
+                                    <option value="upi">UPI</option>
+                                    <option value="netbanking">Net Banking</option>
+                                    <option value="card">Debit/Credit Card</option>
+                                    <option value="wallet">Digital Wallet</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">Add Money</button>
+                        </form>
+                    </div>
+
+                    <!-- Withdraw Money -->
+                    <div class="glass dark:glass-dark rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Withdraw Money</h3>
+                        <form id="withdrawForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Amount</label>
+                                <input type="number" name="amount" min="500" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="Enter amount (Min: ₹500)" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Withdrawal Method</label>
+                                <select name="withdrawal_method" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                                    <option value="">Select withdrawal method</option>
+                                    <option value="bank_transfer">Bank Transfer</option>
+                                    <option value="upi">UPI</option>
+                                    <option value="wallet">Digital Wallet</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">Withdraw Money</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Transaction History -->
+                <div class="glass dark:glass-dark rounded-2xl p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Transaction History</h3>
+                    <div id="transactionHistory" class="space-y-4">
+                        <!-- Transactions will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions Section -->
+            <div id="transactionsSection" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">All Transactions</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Complete history of your financial activities</p>
+                </div>
+
+                <!-- Transaction Filters -->
+                <div class="glass dark:glass-dark rounded-2xl p-6 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Type</label>
+                            <select id="transactionTypeFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                <option value="">All Types</option>
+                                <option value="deposit">Deposit</option>
+                                <option value="withdrawal">Withdrawal</option>
+                                <option value="investment">Investment</option>
+                                <option value="commission">Commission</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
+                            <select id="transactionStatusFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                <option value="">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">From Date</label>
+                            <input type="date" id="transactionFromDate" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">To Date</label>
+                            <input type="date" id="transactionToDate" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button onclick="filterTransactions()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Apply Filters</button>
+                        <button onclick="clearTransactionFilters()" class="ml-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">Clear</button>
+                    </div>
+                </div>
+
+                <!-- Transaction List -->
+                <div class="glass dark:glass-dark rounded-2xl p-6">
+                    <div id="allTransactions" class="space-y-4">
+                        <!-- All transactions will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referrals Section -->
+            <div id="referralsSection" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Referral Program</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Earn commissions by referring friends and family</p>
+                </div>
+
+                <!-- Referral Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white" id="totalReferralsCount">0</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Total Referrals</p>
+                    </div>
+                    <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white" id="totalReferralEarnings">₹0</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Total Earnings</p>
+                    </div>
+                    <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white" id="activeReferrals">0</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Active Referrals</p>
+                    </div>
+                </div>
+
+                <!-- Referral Link -->
+                <div class="glass dark:glass-dark rounded-2xl p-6 mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Your Referral Link</h3>
+                    <div class="flex items-center space-x-4">
+                        <input type="text" id="referralLink" class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white" readonly>
+                        <button onclick="copyReferralLink()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Copy</button>
+                        <button onclick="shareReferralLink()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">Share</button>
+                    </div>
+                </div>
+
+                <!-- Referral List -->
+                <div class="glass dark:glass-dark rounded-2xl p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">My Referrals</h3>
+                    <div id="referralList" class="space-y-4">
+                        <!-- Referrals will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="profileSection" class="section-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Profile Settings</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Manage your account information and preferences</p>
+                </div>
+
+                <!-- Profile Form -->
+                <div class="glass dark:glass-dark rounded-2xl p-6 mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Personal Information</h3>
+                    <form id="profileForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
+                            <input type="text" name="first_name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
+                            <input type="text" name="last_name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" name="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-600 text-gray-900 dark:text-white" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone</label>
+                            <input type="tel" name="phone" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Address</label>
+                            <textarea name="address" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date of Birth</label>
+                            <input type="date" name="date_of_birth" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Gender</label>
+                            <select name="gender" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- KYC Section -->
+                <div class="glass dark:glass-dark rounded-2xl p-6 mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">KYC Verification</h3>
+                    <div id="kycStatus" class="mb-4">
+                        <!-- KYC status will be loaded here -->
+                    </div>
+                    <form id="kycForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Document Type</label>
+                            <select name="document_type" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                                <option value="">Select Document Type</option>
+                                <option value="aadhar">Aadhar Card</option>
+                                <option value="pan">PAN Card</option>
+                                <option value="passport">Passport</option>
+                                <option value="driving_license">Driving License</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Document Number</label>
+                            <input type="text" name="document_number" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload Document</label>
+                            <input type="file" name="document" accept="image/*,.pdf" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                        </div>
+                        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">Submit KYC</button>
+                    </form>
+                </div>
+
+                <!-- Change Password -->
+                <div class="glass dark:glass-dark rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Change Password</h3>
+                    <form id="changePasswordForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Current Password</label>
+                            <input type="password" name="current_password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">New Password</label>
+                            <input type="password" name="new_password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm New Password</label>
+                            <input type="password" name="confirm_password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                        </div>
+                        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors">Change Password</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -318,130 +653,127 @@
         // Global variables
         let currentUser = null;
         let investmentChart = null;
+        let currentSection = 'dashboard';
 
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
-            checkAuth();
-            initializeTheme();
-            initializeEventListeners();
+            console.log('Dashboard loading...');
+            checkAuthentication();
         });
 
-        function checkAuth() {
-            const user = localStorage.getItem('user');
-            if (!user) {
-                window.location.href = '../login.html';
-                return;
-            }
-            
-            currentUser = JSON.parse(user);
-            if (currentUser.role !== 'client') {
-                window.location.href = '../admin/dashboard.html';
-                return;
-            }
-            
-            loadUserData();
-        }
-
-        function loadUserData() {
-            // Update UI with user data
-            document.getElementById('userName').textContent = currentUser.name;
-            document.getElementById('welcomeName').textContent = currentUser.profile?.first_name || currentUser.name;
-            
-            // Update stats
-            if (currentUser.wallet) {
-                document.getElementById('walletBalance').textContent = '₹' + formatNumber(currentUser.wallet.balance);
-                document.getElementById('totalInvested').textContent = '₹' + formatNumber(currentUser.wallet.total_invested);
-                document.getElementById('totalEarned').textContent = '₹' + formatNumber(currentUser.wallet.total_earned);
-            }
-            
-            document.getElementById('activeInvestments').textContent = currentUser.active_investments || 0;
-            
-            // Update notification badge
-            if (currentUser.unread_notifications > 0) {
-                const badge = document.getElementById('notificationBadge');
-                badge.textContent = currentUser.unread_notifications;
-                badge.classList.remove('hidden');
-            }
-            
-            // Load chart data
-            loadInvestmentChart();
-            loadRecentData();
-        }
-
-        function loadInvestmentChart() {
-            const ctx = document.getElementById('investmentChart').getContext('2d');
-            
-            // Sample data - in production, fetch from API
-            const data = {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Investment Value',
-                    data: [0, 10000, 25000, 45000, 60000, 80000],
-                    borderColor: 'rgb(59, 130, 246)',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            };
-
-            investmentChart = new Chart(ctx, {
-                type: 'line',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '₹' + formatNumber(value);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        async function loadRecentData() {
+        async function checkAuthentication() {
+            console.log('Checking authentication...');
             try {
-                // Load recent investments
-                const investmentsResponse = await fetch('../api/client/investments.php');
-                const investmentsData = await investmentsResponse.json();
+                const response = await fetch('../api/client/auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'validate'
+                    })
+                });
                 
-                if (investmentsData.success) {
-                    displayRecentInvestments(investmentsData.investments.slice(0, 5));
+                console.log('Auth response status:', response.status);
+                const result = await response.json();
+                console.log('Auth result:', result);
+                
+                if (!result.success) {
+                    console.log('Authentication failed, redirecting to login');
+                    // Not authenticated, redirect to login
+                    window.location.href = 'login.html';
+                    return;
                 }
-
-                // Load recent transactions
-                const transactionsResponse = await fetch('../api/client/transactions.php');
-                const transactionsData = await transactionsResponse.json();
                 
-                if (transactionsData.success) {
-                    displayRecentTransactions(transactionsData.transactions.slice(0, 5));
+                console.log('Authentication successful, initializing dashboard');
+                // Authentication successful, initialize dashboard
+                initializeTheme();
+                initializeEventListeners();
+                loadDashboardData();
+                
+            } catch (error) {
+                console.error('Authentication check failed:', error);
+                // Show error message instead of immediate redirect for debugging
+                showToast('Authentication check failed. Please login again.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+            }
+        }
+
+        async function loadDashboardData() {
+            console.log('Loading dashboard data...');
+            try {
+                const response = await fetch('../api/client/dashboard.php');
+                console.log('Dashboard response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Dashboard data:', data);
+                
+                if (data.success) {
+                    currentUser = data.data.user;
+                    updateDashboardUI(data.data);
+                    loadRecentData(data.data);
+                    console.log('Dashboard loaded successfully');
+                } else {
+                    console.error('Dashboard load failed:', data.message);
+                    if (data.message === 'Authentication required') {
+                        showToast('Session expired. Please login again.', 'error');
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
+                        return;
+                    }
+                    showToast('Error loading dashboard data: ' + data.message, 'error');
                 }
             } catch (error) {
-                console.error('Error loading recent data:', error);
+                console.error('Error loading dashboard:', error);
+                showToast('Connection error. Please check your internet connection.', 'error');
             }
+        }
+
+        function updateDashboardUI(data) {
+            // Update user info
+            document.getElementById('userName').textContent = data.user.name;
+            document.getElementById('welcomeName').textContent = data.user.name.split(' ')[0];
+            
+            // Update stats
+            const stats = data.statistics;
+            document.getElementById('walletBalance').textContent = '₹' + formatNumber(stats.wallet_balance);
+            document.getElementById('totalInvested').textContent = '₹' + formatNumber(stats.total_invested);
+            document.getElementById('totalEarned').textContent = '₹' + formatNumber(stats.total_earned);
+            document.getElementById('activeInvestments').textContent = stats.active_investments;
+            
+            // Update additional info
+            document.getElementById('portfolioGrowth').textContent = `+${stats.portfolio_growth}%`;
+            document.getElementById('totalInvestments').textContent = `${stats.total_investments} investments`;
+            document.getElementById('referralEarnings').textContent = `₹${formatNumber(stats.referral_earnings)} referral`;
+            document.getElementById('totalReferrals').textContent = `${stats.total_referrals} referrals`;
+            
+            // Update notification badge
+            if (data.unread_notifications > 0) {
+                const badge = document.getElementById('notificationBadge');
+                badge.textContent = data.unread_notifications;
+                badge.classList.remove('hidden');
+            }
+        }
+
+        function loadRecentData(data) {
+            displayRecentInvestments(data.recent_investments);
+            displayRecentTransactions(data.recent_transactions);
         }
 
         function displayRecentInvestments(investments) {
             const container = document.getElementById('recentInvestments');
             
-            if (investments.length === 0) {
+            if (!investments || investments.length === 0) {
                 return; // Keep the empty state
             }
             
             container.innerHTML = investments.map(investment => `
                 <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
                     <div>
-                        <p class="font-medium text-gray-900 dark:text-white">${investment.type}</p>
+                        <p class="font-medium text-gray-900 dark:text-white">${investment.plan_name}</p>
                         <p class="text-sm text-gray-600 dark:text-gray-400">₹${formatNumber(investment.amount)}</p>
                     </div>
                     <div class="text-right">
@@ -457,26 +789,264 @@
         function displayRecentTransactions(transactions) {
             const container = document.getElementById('recentTransactions');
             
-            if (transactions.length === 0) {
+            if (!transactions || transactions.length === 0) {
                 return; // Keep the empty state
             }
             
             container.innerHTML = transactions.map(transaction => `
                 <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
                     <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 rounded-full flex items-center justify-center ${transaction.type === 'credit' ? 'bg-green-500' : 'bg-red-500'}">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${transaction.type === 'credit' ? 'M12 6v6m0 0v6m0-6h6m-6 0H6' : 'M18 12H6'}"></path>
-                            </svg>
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center ${getTransactionTypeColor(transaction.type)}">
+                            ${getTransactionIcon(transaction.type)}
                         </div>
                         <div>
-                            <p class="font-medium text-gray-900 dark:text-white">${transaction.description}</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">${formatDate(transaction.created_at)}</p>
+                            <p class="font-medium text-gray-900 dark:text-white">${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">${transaction.description}</p>
                         </div>
                     </div>
                     <div class="text-right">
-                        <p class="font-medium ${transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}">
-                            ${transaction.type === 'credit' ? '+' : '-'}₹${formatNumber(transaction.amount)}
+                        <p class="font-medium text-gray-900 dark:text-white">₹${formatNumber(transaction.amount)}</p>
+                        <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(transaction.status)}">
+                            ${transaction.status}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Section Management
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + 'Section');
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                currentSection = sectionName;
+                
+                // Load section-specific data
+                loadSectionData(sectionName);
+            }
+        }
+
+        async function loadSectionData(sectionName) {
+            switch (sectionName) {
+                case 'investments':
+                    await loadInvestmentPlans();
+                    await loadMyInvestments();
+                    break;
+                case 'wallet':
+                case 'transactions':
+                    await loadTransactions();
+                    break;
+                case 'referrals':
+                    await loadReferralData();
+                    break;
+                case 'profile':
+                    await loadProfileData();
+                    break;
+            }
+        }
+
+        // Investment Management
+        async function loadInvestmentPlans() {
+            console.log('Loading investment plans...');
+            try {
+                const response = await fetch('../api/client/investments.php?action=plans');
+                console.log('Investment plans response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Investment plans data:', data);
+                
+                if (data.success) {
+                    displayInvestmentPlans(data.plans);
+                    console.log('Investment plans loaded successfully');
+                } else {
+                    console.error('Investment plans load failed:', data.message);
+                    showToast('Error loading investment plans: ' + (data.message || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                console.error('Error loading investment plans:', error);
+                showToast('Connection error while loading plans', 'error');
+            }
+        }
+
+        function displayInvestmentPlans(plans) {
+            console.log('Displaying investment plans:', plans);
+            const container = document.getElementById('investmentPlans');
+            
+            if (!container) {
+                console.error('Investment plans container not found');
+                return;
+            }
+            
+            container.innerHTML = plans.map(plan => `
+                <div class="glass dark:glass-dark rounded-2xl p-6">
+                    <div class="text-center mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">${plan.name}</h3>
+                        <p class="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-2">${plan.interest_rate}%</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Annual Return</p>
+                    </div>
+                    
+                    <div class="space-y-2 mb-6">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Duration:</span>
+                            <span class="text-gray-900 dark:text-white">${plan.duration} months</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Min Amount:</span>
+                            <span class="text-gray-900 dark:text-white">₹${formatNumber(plan.min_amount)}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Max Amount:</span>
+                            <span class="text-gray-900 dark:text-white">₹${formatNumber(plan.max_amount)}</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">${plan.description || 'Investment plan'}</p>
+                    
+                    <button onclick="investInPlan(${plan.id})" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                        Invest Now
+                    </button>
+                </div>
+            `).join('');
+            
+            console.log('Investment plans displayed successfully');
+        }
+
+        async function investInPlan(planId) {
+            console.log('Investing in plan:', planId);
+            const amount = prompt('Enter investment amount:');
+            if (!amount || amount <= 0) {
+                console.log('Invalid amount entered');
+                return;
+            }
+            
+            console.log('Creating investment:', { planId, amount });
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'create');
+                formData.append('plan_id', planId);
+                formData.append('amount', amount);
+                
+                const response = await fetch('../api/client/investments.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                console.log('Investment response status:', response.status);
+                const data = await response.json();
+                console.log('Investment response data:', data);
+                
+                if (data.success) {
+                    showToast('Investment created successfully!', 'success');
+                    loadMyInvestments();
+                    loadDashboardData(); // Refresh dashboard stats
+                    console.log('Investment created successfully');
+                } else {
+                    console.error('Investment failed:', data.message);
+                    showToast(data.message || 'Investment failed', 'error');
+                }
+            } catch (error) {
+                console.error('Error creating investment:', error);
+                showToast('Error creating investment', 'error');
+            }
+        }
+
+        // Make investInPlan globally accessible
+        window.investInPlan = investInPlan;
+
+        async function loadMyInvestments() {
+            try {
+                const response = await fetch('../api/client/investments.php?action=list&user_id=1');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayMyInvestments(data.investments);
+                }
+            } catch (error) {
+                console.error('Error loading investments:', error);
+            }
+        }
+
+        function displayMyInvestments(investments) {
+            const container = document.getElementById('myInvestments');
+            
+            if (investments.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                        <p>No investments yet</p>
+                        <p class="text-sm">Start investing to see your portfolio here</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = investments.map(investment => `
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">${investment.plan_name}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">₹${formatNumber(investment.amount)} • ${investment.interest_rate}% return</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-500">${formatDate(investment.created_at)}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="px-3 py-1 text-sm rounded-full ${getStatusColor(investment.status)}">
+                            ${investment.status}
+                        </span>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${investment.duration_months} months</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Transaction Management
+        async function loadTransactions() {
+            try {
+                const response = await fetch('../api/client/transactions.php?action=list&user_id=1');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayTransactions(data.transactions, 'transactionHistory');
+                    displayTransactions(data.transactions, 'allTransactions');
+                }
+            } catch (error) {
+                console.error('Error loading transactions:', error);
+            }
+        }
+
+        function displayTransactions(transactions, containerId) {
+            const container = document.getElementById(containerId);
+            
+            if (!container) return;
+            
+            if (!transactions || transactions.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                        <p>No transactions yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = transactions.map(transaction => `
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center ${getTransactionTypeColor(transaction.type)}">
+                            ${getTransactionIcon(transaction.type)}
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-900 dark:text-white">${transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">${transaction.description || 'Transaction'}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-500">${formatDate(transaction.created_at)}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-medium text-gray-900 dark:text-white ${transaction.type === 'withdrawal' ? 'text-red-600' : 'text-green-600'}">
+                            ${transaction.type === 'withdrawal' ? '-' : '+'}₹${formatNumber(transaction.amount)}
                         </p>
                         <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(transaction.status)}">
                             ${transaction.status}
@@ -486,35 +1056,184 @@
             `).join('');
         }
 
-        function initializeEventListeners() {
-            // Theme toggle
-            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-            
-            // Profile dropdown
-            document.getElementById('profileBtn').addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.getElementById('profileDropdown').classList.toggle('hidden');
-            });
-            
-            // Notification panel
-            document.getElementById('notificationBtn').addEventListener('click', function() {
-                document.getElementById('notificationPanel').classList.remove('translate-x-full');
-                document.getElementById('overlay').classList.remove('hidden');
-                loadNotifications();
-            });
-            
-            document.getElementById('closeNotifications').addEventListener('click', closeNotificationPanel);
-            document.getElementById('overlay').addEventListener('click', closeNotificationPanel);
-            
-            // Logout
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-            
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function() {
-                document.getElementById('profileDropdown').classList.add('hidden');
-            });
+        // Form Handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            // Deposit form
+            const depositForm = document.getElementById('depositForm');
+            if (depositForm) {
+                depositForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    formData.append('action', 'deposit');
+                    formData.append('user_id', '1');
+                    
+                    try {
+                        const response = await fetch('../api/client/transactions.php', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showToast('Deposit request submitted successfully!', 'success');
+                            this.reset();
+                            loadTransactions();
+                        } else {
+                            showToast(data.message, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error submitting deposit:', error);
+                        showToast('Error submitting deposit request', 'error');
+                    }
+                });
+            }
+
+            // Withdraw form
+            const withdrawForm = document.getElementById('withdrawForm');
+            if (withdrawForm) {
+                withdrawForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    formData.append('action', 'withdraw');
+                    formData.append('user_id', '1');
+                    
+                    try {
+                        const response = await fetch('../api/client/transactions.php', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showToast('Withdrawal request submitted successfully!', 'success');
+                            this.reset();
+                            loadTransactions();
+                        } else {
+                            showToast(data.message, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error submitting withdrawal:', error);
+                        showToast('Error submitting withdrawal request', 'error');
+                    }
+                });
+            }
+        });
+
+        // Referral Management
+        async function loadReferralData() {
+            try {
+                const response = await fetch('../api/client/profile.php?user_id=1');
+                const data = await response.json();
+                
+                if (data.success && data.referral_info) {
+                    const referralInfo = data.referral_info;
+                    document.getElementById('totalReferralsCount').textContent = referralInfo.total_referrals || 0;
+                    document.getElementById('totalReferralEarnings').textContent = '₹' + formatNumber(referralInfo.referral_earnings || 0);
+                    document.getElementById('activeReferrals').textContent = referralInfo.total_referrals || 0;
+                    
+                    // Set referral link
+                    const referralLink = `${window.location.origin}/register.html?ref=${referralInfo.referral_code}`;
+                    document.getElementById('referralLink').value = referralLink;
+                }
+            } catch (error) {
+                console.error('Error loading referral data:', error);
+            }
         }
 
+        function copyReferralLink() {
+            console.log('Copy referral link function called');
+            const referralLink = document.getElementById('referralLink');
+            if (referralLink) {
+                referralLink.select();
+                document.execCommand('copy');
+                showToast('Referral link copied!', 'success');
+                console.log('Referral link copied');
+            } else {
+                console.error('Referral link element not found');
+                showToast('Error copying link', 'error');
+            }
+        }
+
+        function shareReferralLink() {
+            console.log('Share referral link function called');
+            const referralLink = document.getElementById('referralLink');
+            if (referralLink && navigator.share) {
+                navigator.share({
+                    title: 'Join SJA Foundation',
+                    text: 'Start investing with SJA Foundation using my referral link',
+                    url: referralLink.value
+                });
+                console.log('Referral link shared via Web Share API');
+            } else {
+                console.log('Web Share API not available, copying instead');
+                copyReferralLink();
+            }
+        }
+
+        // Make referral functions globally accessible
+        window.copyReferralLink = copyReferralLink;
+        window.shareReferralLink = shareReferralLink;
+
+        // Profile Management
+        async function loadProfileData() {
+            try {
+                const response = await fetch('../api/client/profile.php?user_id=1');
+                const data = await response.json();
+                
+                if (data.success) {
+                    populateProfileForm(data.profile);
+                    displayKYCStatus(data.kyc_status);
+                }
+            } catch (error) {
+                console.error('Error loading profile data:', error);
+            }
+        }
+
+        function populateProfileForm(profile) {
+            const form = document.getElementById('profileForm');
+            if (form && profile) {
+                form.first_name.value = profile.first_name || '';
+                form.last_name.value = profile.last_name || '';
+                form.email.value = profile.email || '';
+                form.phone.value = profile.phone || '';
+                form.address.value = profile.address || '';
+                form.date_of_birth.value = profile.date_of_birth || '';
+                form.gender.value = profile.gender || '';
+            }
+        }
+
+        function displayKYCStatus(kycStatus) {
+            const container = document.getElementById('kycStatus');
+            
+            if (!kycStatus) {
+                container.innerHTML = `
+                    <div class="bg-yellow-100 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded-lg p-4">
+                        <p class="text-yellow-800 dark:text-yellow-200">KYC verification is required to unlock all features.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const statusColors = {
+                pending: 'bg-yellow-100 dark:bg-yellow-900 border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200',
+                approved: 'bg-green-100 dark:bg-green-900 border-green-300 dark:border-green-700 text-green-800 dark:text-green-200',
+                rejected: 'bg-red-100 dark:bg-red-900 border-red-300 dark:border-red-700 text-red-800 dark:text-red-200'
+            };
+            
+            container.innerHTML = `
+                <div class="${statusColors[kycStatus.status]} border rounded-lg p-4">
+                    <p>KYC Status: <strong>${kycStatus.status.toUpperCase()}</strong></p>
+                    <p class="text-sm mt-1">Document: ${kycStatus.document_type}</p>
+                    ${kycStatus.admin_remarks ? `<p class="text-sm mt-1">Remarks: ${kycStatus.admin_remarks}</p>` : ''}
+                </div>
+            `;
+        }
+
+        // Utility Functions
         function initializeTheme() {
             const currentTheme = localStorage.getItem('theme') || 'light';
             const body = document.getElementById('body');
@@ -546,48 +1265,231 @@
             }
         }
 
+        function closeNotificationPanel() {
+            const panel = document.getElementById('notificationPanel');
+            const overlay = document.getElementById('overlay');
+            if (panel) {
+                panel.classList.add('translate-x-full');
+            }
+            if (overlay) {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function initializeEventListeners() {
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Profile dropdown
+            document.getElementById('profileBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.getElementById('profileDropdown').classList.toggle('hidden');
+            });
+            
+            // Notification panel
+            document.getElementById('notificationBtn').addEventListener('click', function() {
+                const panel = document.getElementById('notificationPanel');
+                const overlay = document.getElementById('overlay');
+                if (panel) {
+                    panel.classList.remove('translate-x-full');
+                }
+                if (overlay) {
+                    overlay.classList.remove('hidden');
+                }
+                loadNotifications();
+            });
+            
+            // Close notification panel
+            const closeNotifications = document.getElementById('closeNotifications');
+            const overlay = document.getElementById('overlay');
+            if (closeNotifications) {
+                closeNotifications.addEventListener('click', closeNotificationPanel);
+            }
+            if (overlay) {
+                overlay.addEventListener('click', closeNotificationPanel);
+            }
+            
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            
+            // Form submissions
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    updateProfile();
+                });
+            }
+            
+            const changePasswordForm = document.getElementById('changePasswordForm');
+            if (changePasswordForm) {
+                changePasswordForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    changePassword();
+                });
+            }
+            
+            // Remove onclick attributes and use proper event listeners
+            document.addEventListener('click', function(e) {
+                // Handle copy referral link
+                if (e.target && e.target.textContent === 'Copy') {
+                    e.preventDefault();
+                    copyReferralLink();
+                }
+                
+                // Handle share referral link
+                if (e.target && e.target.textContent === 'Share') {
+                    e.preventDefault();
+                    shareReferralLink();
+                }
+                
+                // Handle add money buttons
+                if (e.target && (e.target.textContent.includes('Add Money') || e.target.onclick && e.target.onclick.toString().includes('addMoney'))) {
+                    e.preventDefault();
+                    addMoney();
+                }
+                
+                // Handle withdraw money buttons
+                if (e.target && (e.target.textContent.includes('Withdraw') || e.target.onclick && e.target.onclick.toString().includes('withdrawMoney'))) {
+                    e.preventDefault();
+                    withdrawMoney();
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                document.getElementById('profileDropdown').classList.add('hidden');
+            });
+            
+            // Initialize dashboard section
+            showSection('dashboard');
+        }
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-IN').format(num);
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'active': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+                'pending': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+                'completed': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+                'rejected': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+                'cancelled': 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+            };
+            
+            return colors[status] || colors['pending'];
+        }
+
+        function getTransactionTypeColor(type) {
+            const colors = {
+                'deposit': 'bg-green-500',
+                'withdrawal': 'bg-red-500',
+                'investment': 'bg-blue-500',
+                'commission': 'bg-purple-500',
+                'bonus': 'bg-yellow-500'
+            };
+            return colors[type] || 'bg-gray-500';
+        }
+
+        function getTransactionIcon(type) {
+            const icons = {
+                'deposit': '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>',
+                'withdrawal': '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path></svg>',
+                'investment': '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>',
+                'commission': '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>'
+            };
+            return icons[type] || icons.deposit;
+        }
+
+        function showToast(message, type = 'info') {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full ${
+                type === 'success' ? 'bg-green-600 text-white' :
+                type === 'error' ? 'bg-red-600 text-white' :
+                'bg-blue-600 text-white'
+            }`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        function filterTransactions() {
+            // Implementation for transaction filtering
+            loadTransactions();
+        }
+
+        function clearTransactionFilters() {
+            document.getElementById('transactionTypeFilter').value = '';
+            document.getElementById('transactionStatusFilter').value = '';
+            document.getElementById('transactionFromDate').value = '';
+            document.getElementById('transactionToDate').value = '';
+            loadTransactions();
+        }
+
         async function loadNotifications() {
             try {
-                const response = await fetch('../api/client/notifications.php');
-                const data = await response.json();
-                
-                if (data.success) {
-                    displayNotifications(data.notifications);
+                // For now, just show a placeholder since we don't have a notifications API yet
+                const container = document.getElementById('notificationList');
+                if (container) {
+                    container.innerHTML = `
+                        <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                            <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM16 3H4v2h12V3zM4 7h6v2H4V7zM4 11h6v2H4v-2z"></path>
+                            </svg>
+                            <p>No notifications</p>
+                        </div>
+                    `;
                 }
             } catch (error) {
                 console.error('Error loading notifications:', error);
             }
         }
 
-        function displayNotifications(notifications) {
-            const container = document.getElementById('notificationList');
-            
-            if (notifications.length === 0) {
-                return; // Keep empty state
+        async function logout() {
+            try {
+                const response = await fetch('../api/client/auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'logout'
+                    })
+                });
+                
+                // Always redirect to login, regardless of API response
+                window.location.href = 'login.html';
+                
+            } catch (error) {
+                console.error('Logout error:', error);
+                // Still redirect even if there's an error
+                window.location.href = 'login.html';
             }
-            
-            container.innerHTML = notifications.map(notification => `
-                <div class="p-4 bg-white/5 rounded-lg ${notification.read_status ? 'opacity-60' : ''}">
-                    <div class="flex items-start space-x-3">
-                        <div class="w-2 h-2 rounded-full ${notification.read_status ? 'bg-gray-400' : 'bg-blue-500'} mt-2"></div>
-                        <div class="flex-1">
-                            <h4 class="font-medium text-gray-900 dark:text-white">${notification.title}</h4>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${notification.message}</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">${formatDate(notification.created_at)}</p>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function closeNotificationPanel() {
-            document.getElementById('notificationPanel').classList.add('translate-x-full');
-            document.getElementById('overlay').classList.add('hidden');
-        }
-
-        function logout() {
-            localStorage.removeItem('user');
-            window.location.href = '../login.html';
         }
 
         // Utility functions
@@ -614,6 +1516,213 @@
             
             return colors[status] || colors['pending'];
         }
+
+        function displayReferralData(data) {
+            // Update referral statistics
+            const stats = data.statistics || {};
+            const elements = {
+                'totalReferralsCount': stats.total_referrals || 0,
+                'activeReferrals': stats.active_referrals || 0,
+                'totalReferralEarnings': '₹' + formatNumber(stats.total_earnings || 0),
+                'monthlyReferrals': stats.monthly_referrals || 0
+            };
+            
+            Object.entries(elements).forEach(([id, value]) => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = value;
+            });
+            
+            // Display referral link
+            const referralLink = document.getElementById('referralLink');
+            if (referralLink && data.referral_code) {
+                referralLink.value = `${window.location.origin}/client/register.html?ref=${data.referral_code}`;
+            }
+            
+            // Display recent referrals
+            const referralList = document.getElementById('referralList');
+            if (referralList && data.recent_referrals) {
+                if (data.recent_referrals.length === 0) {
+                    referralList.innerHTML = `
+                        <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                            <p>No referrals yet</p>
+                            <p class="text-sm">Share your referral link to start earning commissions</p>
+                        </div>
+                    `;
+                } else {
+                    referralList.innerHTML = data.recent_referrals.map(referral => `
+                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">${referral.name}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">${referral.email}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-500">Joined: ${formatDate(referral.created_at)}</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-3 py-1 text-sm rounded-full ${getStatusColor(referral.status)}">
+                                    ${referral.status}
+                                </span>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+        }
+
+        function displayProfileData(user) {
+            const fields = {
+                'profileFirstName': user.first_name || user.name?.split(' ')[0] || '',
+                'profileLastName': user.last_name || user.name?.split(' ')[1] || '',
+                'profileEmail': user.email || '',
+                'profilePhone': user.phone || ''
+            };
+            
+            Object.entries(fields).forEach(([id, value]) => {
+                const element = document.querySelector(`[name="${id.replace('profile', '').toLowerCase()}"]`);
+                if (element) element.value = value;
+            });
+        }
+
+        async function updateProfile() {
+            const form = document.getElementById('profileForm');
+            const formData = new FormData(form);
+            formData.append('action', 'update_profile');
+            
+            try {
+                const response = await fetch('../api/client/profile.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Profile updated successfully!', 'success');
+                    loadDashboardData(); // Refresh user name in header
+                } else {
+                    showToast(data.message || 'Profile update failed', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showToast('Error updating profile', 'error');
+            }
+        }
+
+        async function changePassword() {
+            const form = document.getElementById('changePasswordForm');
+            const formData = new FormData(form);
+            
+            const newPassword = formData.get('new_password');
+            const confirmPassword = formData.get('confirm_password');
+            
+            if (newPassword !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+            
+            formData.append('action', 'change_password');
+            
+            try {
+                const response = await fetch('../api/client/profile.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Password changed successfully!', 'success');
+                    form.reset(); // Clear form
+                } else {
+                    showToast(data.message || 'Password change failed', 'error');
+                }
+            } catch (error) {
+                console.error('Error changing password:', error);
+                showToast('Error changing password', 'error');
+            }
+        }
+
+        // Wallet Functions
+        async function addMoney() {
+            console.log('Add money function called');
+            const amount = prompt('Enter amount to add to wallet:');
+            if (!amount || amount <= 0) {
+                console.log('Invalid amount entered for deposit');
+                return;
+            }
+            
+            console.log('Creating deposit:', { amount });
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'deposit');
+                formData.append('amount', amount);
+                formData.append('payment_method', 'online');
+                
+                const response = await fetch('../api/client/transactions.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                console.log('Deposit response status:', response.status);
+                const data = await response.json();
+                console.log('Deposit response data:', data);
+                
+                if (data.success) {
+                    showToast('Money added successfully!', 'success');
+                    loadDashboardData();
+                    loadTransactions();
+                    console.log('Deposit successful');
+                } else {
+                    console.error('Deposit failed:', data.message);
+                    showToast(data.message || 'Failed to add money', 'error');
+                }
+            } catch (error) {
+                console.error('Error adding money:', error);
+                showToast('Error adding money', 'error');
+            }
+        }
+
+        async function withdrawMoney() {
+            console.log('Withdraw money function called');
+            const amount = prompt('Enter amount to withdraw:');
+            if (!amount || amount <= 0) {
+                console.log('Invalid amount entered for withdrawal');
+                return;
+            }
+            
+            console.log('Creating withdrawal:', { amount });
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'withdraw');
+                formData.append('amount', amount);
+                
+                const response = await fetch('../api/client/transactions.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                console.log('Withdrawal response status:', response.status);
+                const data = await response.json();
+                console.log('Withdrawal response data:', data);
+                
+                if (data.success) {
+                    showToast('Withdrawal request submitted!', 'success');
+                    loadDashboardData();
+                    loadTransactions();
+                    console.log('Withdrawal successful');
+                } else {
+                    console.error('Withdrawal failed:', data.message);
+                    showToast(data.message || 'Withdrawal failed', 'error');
+                }
+            } catch (error) {
+                console.error('Error withdrawing money:', error);
+                showToast('Error processing withdrawal', 'error');
+            }
+        }
+
+        // Make wallet functions globally accessible
+        window.addMoney = addMoney;
+        window.withdrawMoney = withdrawMoney;
     </script>
 </body>
 </html> 
