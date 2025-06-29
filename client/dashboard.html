@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard - SJA Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-bg-dark {
+            background: linear-gradient(135deg, #2D1B69 0%, #11998e 100%);
+        }
+        
+        .floating-shape {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .notification-badge {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-100 dark:bg-gray-900 transition-all duration-300" id="body">
+    <!-- Floating Background Shapes -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="floating-shape absolute top-20 left-20 w-32 h-32 bg-blue-400/10 rounded-full blur-xl"></div>
+        <div class="floating-shape absolute top-40 right-32 w-24 h-24 bg-purple-400/10 rounded-full blur-lg" style="animation-delay: -2s;"></div>
+        <div class="floating-shape absolute bottom-32 left-1/4 w-40 h-40 bg-green-400/10 rounded-full blur-2xl" style="animation-delay: -4s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass dark:glass-dark border-b border-white/20 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-gray-900 dark:text-white">SJA Foundation</h1>
+                    <span class="ml-3 px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">Client</span>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Notifications -->
+                    <button id="notificationBtn" class="relative p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM16 3H4v2h12V3zM4 7h6v2H4V7zM4 11h6v2H4v-2z"></path>
+                        </svg>
+                        <span id="notificationBadge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center notification-badge">0</span>
+                    </button>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
+                        <svg id="sunIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg id="moonIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <button id="profileBtn" class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            <img id="profileImage" src="https://via.placeholder.com/32x32?text=U" alt="Profile" class="w-8 h-8 rounded-full">
+                            <span id="userName" class="hidden sm:block">Loading...</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 glass dark:glass-dark rounded-lg shadow-lg py-2">
+                            <a href="#" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-white/20 transition-colors">Profile Settings</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-white/20 transition-colors">KYC Verification</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-white/20 transition-colors">Help & Support</a>
+                            <hr class="my-2 border-white/20">
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-red-600 hover:bg-white/20 transition-colors">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="mb-8 fade-in">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome back, <span id="welcomeName">User</span>!</h2>
+            <p class="text-gray-600 dark:text-gray-400">Here's your investment overview and latest updates.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Wallet Balance -->
+            <div class="glass dark:glass-dark rounded-2xl p-6 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Wallet Balance</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white" id="walletBalance">₹0.00</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Invested -->
+            <div class="glass dark:glass-dark rounded-2xl p-6 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Total Invested</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalInvested">₹0.00</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Earned -->
+            <div class="glass dark:glass-dark rounded-2xl p-6 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Total Earned</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalEarned">₹0.00</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Investments -->
+            <div class="glass dark:glass-dark rounded-2xl p-6 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Active Investments</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white" id="activeInvestments">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <!-- Investment Chart -->
+            <div class="lg:col-span-2 glass dark:glass-dark rounded-2xl p-6">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Investment Growth</h3>
+                <canvas id="investmentChart" width="400" height="200"></canvas>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="glass dark:glass-dark rounded-2xl p-6">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+                <div class="space-y-3">
+                    <button class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>New Investment</span>
+                    </button>
+                    
+                    <button class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                        <span>Withdraw Funds</span>
+                    </button>
+                    
+                    <button class="w-full px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                        <span>Complete KYC</span>
+                    </button>
+                    
+                    <button class="w-full px-4 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-all duration-200 flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span>Refer & Earn</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Recent Investments -->
+            <div class="glass dark:glass-dark rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Investments</h3>
+                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+                </div>
+                
+                <div id="recentInvestments" class="space-y-4">
+                    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                        <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <p>No investments yet</p>
+                        <p class="text-sm">Start your investment journey today!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="glass dark:glass-dark rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Recent Transactions</h3>
+                    <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+                </div>
+                
+                <div id="recentTransactions" class="space-y-4">
+                    <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                        <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                        <p>No transactions yet</p>
+                        <p class="text-sm">Your transaction history will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="fixed inset-y-0 right-0 w-96 glass dark:glass-dark transform translate-x-full transition-transform duration-300 z-50">
+        <div class="p-6 border-b border-white/20">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Notifications</h3>
+                <button id="closeNotifications" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div id="notificationList" class="p-6 space-y-4 overflow-y-auto h-full">
+            <div class="text-center text-gray-500 dark:text-gray-400 py-8">
+                <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM16 3H4v2h12V3zM4 7h6v2H4V7zM4 11h6v2H4v-2z"></path>
+                </svg>
+                <p>No notifications</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black/50 hidden z-40"></div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let investmentChart = null;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            initializeTheme();
+            initializeEventListeners();
+        });
+
+        function checkAuth() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            currentUser = JSON.parse(user);
+            if (currentUser.role !== 'client') {
+                window.location.href = '../admin/dashboard.html';
+                return;
+            }
+            
+            loadUserData();
+        }
+
+        function loadUserData() {
+            // Update UI with user data
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('welcomeName').textContent = currentUser.profile?.first_name || currentUser.name;
+            
+            // Update stats
+            if (currentUser.wallet) {
+                document.getElementById('walletBalance').textContent = '₹' + formatNumber(currentUser.wallet.balance);
+                document.getElementById('totalInvested').textContent = '₹' + formatNumber(currentUser.wallet.total_invested);
+                document.getElementById('totalEarned').textContent = '₹' + formatNumber(currentUser.wallet.total_earned);
+            }
+            
+            document.getElementById('activeInvestments').textContent = currentUser.active_investments || 0;
+            
+            // Update notification badge
+            if (currentUser.unread_notifications > 0) {
+                const badge = document.getElementById('notificationBadge');
+                badge.textContent = currentUser.unread_notifications;
+                badge.classList.remove('hidden');
+            }
+            
+            // Load chart data
+            loadInvestmentChart();
+            loadRecentData();
+        }
+
+        function loadInvestmentChart() {
+            const ctx = document.getElementById('investmentChart').getContext('2d');
+            
+            // Sample data - in production, fetch from API
+            const data = {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Investment Value',
+                    data: [0, 10000, 25000, 45000, 60000, 80000],
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            };
+
+            investmentChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + formatNumber(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        async function loadRecentData() {
+            try {
+                // Load recent investments
+                const investmentsResponse = await fetch('../api/client/investments.php');
+                const investmentsData = await investmentsResponse.json();
+                
+                if (investmentsData.success) {
+                    displayRecentInvestments(investmentsData.investments.slice(0, 5));
+                }
+
+                // Load recent transactions
+                const transactionsResponse = await fetch('../api/client/transactions.php');
+                const transactionsData = await transactionsResponse.json();
+                
+                if (transactionsData.success) {
+                    displayRecentTransactions(transactionsData.transactions.slice(0, 5));
+                }
+            } catch (error) {
+                console.error('Error loading recent data:', error);
+            }
+        }
+
+        function displayRecentInvestments(investments) {
+            const container = document.getElementById('recentInvestments');
+            
+            if (investments.length === 0) {
+                return; // Keep the empty state
+            }
+            
+            container.innerHTML = investments.map(investment => `
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">${investment.type}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">₹${formatNumber(investment.amount)}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(investment.status)}">
+                            ${investment.status}
+                        </span>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${formatDate(investment.created_at)}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayRecentTransactions(transactions) {
+            const container = document.getElementById('recentTransactions');
+            
+            if (transactions.length === 0) {
+                return; // Keep the empty state
+            }
+            
+            container.innerHTML = transactions.map(transaction => `
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center ${transaction.type === 'credit' ? 'bg-green-500' : 'bg-red-500'}">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${transaction.type === 'credit' ? 'M12 6v6m0 0v6m0-6h6m-6 0H6' : 'M18 12H6'}"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-900 dark:text-white">${transaction.description}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">${formatDate(transaction.created_at)}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-medium ${transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}">
+                            ${transaction.type === 'credit' ? '+' : '-'}₹${formatNumber(transaction.amount)}
+                        </p>
+                        <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(transaction.status)}">
+                            ${transaction.status}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function initializeEventListeners() {
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Profile dropdown
+            document.getElementById('profileBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.getElementById('profileDropdown').classList.toggle('hidden');
+            });
+            
+            // Notification panel
+            document.getElementById('notificationBtn').addEventListener('click', function() {
+                document.getElementById('notificationPanel').classList.remove('translate-x-full');
+                document.getElementById('overlay').classList.remove('hidden');
+                loadNotifications();
+            });
+            
+            document.getElementById('closeNotifications').addEventListener('click', closeNotificationPanel);
+            document.getElementById('overlay').addEventListener('click', closeNotificationPanel);
+            
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                document.getElementById('profileDropdown').classList.add('hidden');
+            });
+        }
+
+        function initializeTheme() {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            const body = document.getElementById('body');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            if (currentTheme === 'dark') {
+                body.classList.add('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.getElementById('body');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            body.classList.toggle('dark');
+            
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                localStorage.setItem('theme', 'light');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            }
+        }
+
+        async function loadNotifications() {
+            try {
+                const response = await fetch('../api/client/notifications.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayNotifications(data.notifications);
+                }
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+        }
+
+        function displayNotifications(notifications) {
+            const container = document.getElementById('notificationList');
+            
+            if (notifications.length === 0) {
+                return; // Keep empty state
+            }
+            
+            container.innerHTML = notifications.map(notification => `
+                <div class="p-4 bg-white/5 rounded-lg ${notification.read_status ? 'opacity-60' : ''}">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-2 h-2 rounded-full ${notification.read_status ? 'bg-gray-400' : 'bg-blue-500'} mt-2"></div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-900 dark:text-white">${notification.title}</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${notification.message}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">${formatDate(notification.created_at)}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function closeNotificationPanel() {
+            document.getElementById('notificationPanel').classList.add('translate-x-full');
+            document.getElementById('overlay').classList.add('hidden');
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = '../login.html';
+        }
+
+        // Utility functions
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-IN').format(num);
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'active': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+                'pending': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+                'completed': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+                'rejected': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+                'cancelled': 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+            };
+            
+            return colors[status] || colors['pending'];
+        }
+    </script>
+</body>
+</html> 
